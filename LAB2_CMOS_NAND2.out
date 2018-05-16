@@ -1,0 +1,164 @@
+
+**** 02/01/16 09:28:49 *********** Evaluation PSpice (Nov 1999) **************
+
+ CMOS NAND
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+
+***MOS Description
+*device_name drain_node gate_node source_node body_node device_type gate_width gate_length
+
+mpu1 5 2 1 1 penh w=12u l=3u
+mpu2 5 3 1 1 penh w=12u l=3u
+
+mpd1 5 2 4 4 nenh w=8u l=3u
+mpd2 4 3 0 0 nenh w=8u l=3u
+
+***Load Capacitor Description
+*Device_name node+ node- value
+
+cl 5 0 50f
+
+***Source Description
+**********************
+
+**constant voltage source
+*source_name node+ node- value
+
+vdd 1 0 5
+
+**pulse voltage_source
+*source_name node+ node- pulse ( Vmin Vmax delay/offset/(td) rise_time/(tr) fall_time/(tr) time_width/(pw)  period/(per))
+
+va 2 0 pulse (0 5 3ns 3ns 3ns 20ns 40ns) 
+vb 3 0 pulse (0 5 3ns 3ns 3ns 30ns 60ns)
+
+
+
+ 
+
+**********************************************
+*Model Specification
+*********************************************
+
+*********************************************
+****NMOS Model (MOS type is Enhancement-MODE)
+
+.model nenh nmos level=2 vto=.85 kp=30e-6 tox=470e-10 nsub=38e14
++ld=0.6e-6 uo=624 uexp=0.055 vmax=20e4 neff=9.8 delta=2.0
++ cj=160e-6 cjsw=430e-12 mj=0.5 mjsw=0.33 pb=0.81
+
+*********************************************
+****PMOS Model (MOS type is Enhancement-MODE)
+
+.model penh pmos level=2 vto=-.85 kp=12e-6 tox=470e-10 nsub=8.7e14
++ld=0.5e-6 uo=200 uexp=0.18 vmax=12e4 neff=4.0 delta=2.0
++ cj=100e-6 cjsw=180e-12 mj=0.5 mjsw=0.33 pb=0.7
+
+
+***transient Analysis
+
+.tran 1ns 160ns
+
+.probe
+
+***END of Simulation
+.end
+
+**** 02/01/16 09:28:49 *********** Evaluation PSpice (Nov 1999) **************
+
+ CMOS NAND
+
+
+ ****     MOSFET MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               nenh            penh            
+               NMOS            PMOS            
+       LEVEL    2               2            
+           L  100.000000E-06  100.000000E-06 
+           W  100.000000E-06  100.000000E-06 
+          LD  600.000000E-09  500.000000E-09 
+         VTO     .85            -.85         
+          KP   30.000000E-06   12.000000E-06 
+       GAMMA     .48341          .231304     
+         PHI     .645382         .569121     
+      LAMBDA    0               0            
+          IS   10.000000E-15   10.000000E-15 
+          JS    0               0            
+          PB     .81             .7          
+        PBSW     .81             .7          
+          CJ  160.000000E-06  100.000000E-06 
+        CJSW  430.000000E-12  180.000000E-12 
+        CGSO    0               0            
+        CGDO    0               0            
+        CGBO    0               0            
+        NSUB    3.800000E+15  870.000000E+12 
+         TOX   47.000000E-09   47.000000E-09 
+          XJ    0               0            
+          UO  624             200            
+       UCRIT   10.000000E+03   10.000000E+03 
+        UEXP     .055            .18         
+        VMAX  200.000000E+03  120.000000E+03 
+        NEFF    9.8             4            
+       DELTA    2               2            
+      DIOMOD    1               1            
+         VFB    0               0            
+        LETA    0               0            
+        WETA    0               0            
+          U0    0               0            
+        TEMP    0               0            
+         VDD    0               0            
+       XPART    0               0            
+
+
+**** 02/01/16 09:28:49 *********** Evaluation PSpice (Nov 1999) **************
+
+ CMOS NAND
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(    1)    5.0000  (    2)    0.0000  (    3)    0.0000  (    4)    2.5000      
+
+(    5)    5.0000  
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    vdd         -2.510E-12
+    va           0.000E+00
+    vb           0.000E+00
+
+    TOTAL POWER DISSIPATION   1.26E-11  WATTS
+
+
+
+          JOB CONCLUDED
+
+          TOTAL JOB TIME             .02
+

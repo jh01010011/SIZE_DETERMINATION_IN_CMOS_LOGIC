@@ -1,0 +1,62 @@
+CMOS NAND
+
+
+***MOS Description
+*device_name drain_node gate_node source_node body_node device_type gate_width gate_length
+
+mpu1 5 2 1 1 penh w=12u l=3u
+mpu2 5 3 1 1 penh w=12u l=3u
+
+mpd1 5 2 4 4 nenh w=8u l=3u
+mpd2 4 3 0 0 nenh w=8u l=3u
+
+***Load Capacitor Description
+*Device_name node+ node- value
+
+cl 5 0 50f
+
+***Source Description
+**********************
+
+**constant voltage source
+*source_name node+ node- value
+
+vdd 1 0 5
+
+**pulse voltage_source
+*source_name node+ node- pulse ( Vmin Vmax delay/offset/(td) rise_time/(tr) fall_time/(tr) time_width/(pw)  period/(per))
+
+va 2 0 pulse (0 5 3ns 3ns 3ns 20ns 40ns) 
+vb 3 0 pulse (0 5 3ns 3ns 3ns 30ns 60ns)
+
+
+
+ 
+
+**********************************************
+*Model Specification
+*********************************************
+
+*********************************************
+****NMOS Model (MOS type is Enhancement-MODE)
+
+.model nenh nmos level=2 vto=.85 kp=30e-6 tox=470e-10 nsub=38e14
++ld=0.6e-6 uo=624 uexp=0.055 vmax=20e4 neff=9.8 delta=2.0
++ cj=160e-6 cjsw=430e-12 mj=0.5 mjsw=0.33 pb=0.81
+
+*********************************************
+****PMOS Model (MOS type is Enhancement-MODE)
+
+.model penh pmos level=2 vto=-.85 kp=12e-6 tox=470e-10 nsub=8.7e14
++ld=0.5e-6 uo=200 uexp=0.18 vmax=12e4 neff=4.0 delta=2.0
++ cj=100e-6 cjsw=180e-12 mj=0.5 mjsw=0.33 pb=0.7
+
+
+***transient Analysis
+
+.tran 1ns 160ns
+
+.probe
+
+***END of Simulation
+.end
